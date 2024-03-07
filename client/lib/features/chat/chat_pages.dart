@@ -1,3 +1,4 @@
+import 'package:client/design/app_colors.dart';
 import 'package:client/features/chat/bloc/bloc/chat_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,35 @@ class _ChatPageState extends State<ChatPage> {
           return Container(
             child: Column(
               children: [
-                Expanded(child: ListView()),
+                Expanded(
+                    child: ListView.builder(
+                  padding: const EdgeInsets.only(top: 12),
+                  itemBuilder: (context, index) {
+                    return Container(
+                      decoration: BoxDecoration(
+                          color:
+                              chatBloc.cachedMessages[index].role == 'assistant'
+                                  ? AppColors.messagebgColor
+                                  : Colors.transparent),
+                      margin: const EdgeInsets.only(bottom: 8),
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        bottom: 8,
+                        top: 8,
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            chatBloc.cachedMessages[index].content,
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                  itemCount: chatBloc.cachedMessages.length,
+                )),
                 Container(
                   height: 120,
                   padding: const EdgeInsets.all(16),
@@ -86,15 +115,15 @@ class _ChatPageState extends State<ChatPage> {
                 // const SizedBox(
                 //   height: 10,
                 // ),
-               const Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 16.0),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.0),
                   child: Row(
                     children: [
                       Text(
                         "ChatGpt April 2024",
                         style: TextStyle(decoration: TextDecoration.underline),
                       ),
-                       SizedBox(
+                      SizedBox(
                         width: 12,
                       ),
                       Text('Free Research Preview'),
